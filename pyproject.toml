@@ -1,0 +1,45 @@
+[tool.pdm]
+
+[project]
+name = "WojackBot"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "jaypyles", email = "jpylesbusiness@gmail.com"},
+]
+dependencies = [
+    "python-dotenv>=1.0.0",
+    "py-cord>=2.4.1",
+    "ifunnygifmaker==0.2.2",
+    "praw>=7.7.0",
+]
+requires-python = ">=3.9"
+readme = "README.md"
+license = {text = "MIT"}
+
+[tool.pyright]
+include = ["WojackBot"]
+exclude = ["**/node_modules", "**/__pycache__"]
+ignore = []
+defineConstant = { DEBUG = true }
+stubPath = ""
+
+reportMissingImports = true
+reportMissingTypeStubs = false
+
+pythonVersion = "3.9"
+pythonPlatform = "Linux"
+
+
+[tool.isort]
+length_sort = "1"
+profile = "black"
+sections = "STDLIB,THIRDPARTY,FIRSTPARTY,LOCALFOLDER"
+import_heading_stdlib = "STL"
+import_heading_thirdparty = "PDM"
+import_heading_firstparty = "LOCAL"
+import_heading_localfolder = "LOCAL"
+
+[build-system]
+requires = ["pdm-pep517>=1.0"]
+build-backend = "pdm.pep517.api"

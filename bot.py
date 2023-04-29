@@ -17,7 +17,7 @@ tenor_token = os.getenv("TENOR_API_KEY")
 # FUNCTIONAL
 m = ifunnygifmaker.MemeMaker(token=tenor_token)
 reddit = RedditSearcher()
-shitpost_subreddit = reddit.subreddit("copypasta")
+caption_subreddit = reddit.subreddit("copypasta")
 meme_generation = reddit.subreddit("gif")
 
 
@@ -41,7 +41,7 @@ meme_making = bot.create_group("meme_making", "Commands related to making memes"
 async def random(ctx):
     await ctx.respond("Making random meme..")
 
-    caption = shitpost_subreddit.random().title
+    caption = caption_subreddit.random().title
     search = meme_generation.random().title
 
     m.make_meme(text=caption, query=search.replace(" ", "+"))

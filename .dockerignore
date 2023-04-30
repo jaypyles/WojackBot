@@ -1,9 +1,7 @@
 *__pypackages__/
 __pypackages__
-.env
 __pycache__/
 *.gif
-*.tar
-*.log
-*.pid
-.docker/build-cache
+.git
+.gitignore
+.pdm-python

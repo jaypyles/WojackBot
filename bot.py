@@ -34,6 +34,30 @@ async def on_ready():
     print(f"Logged in as {bot.user}")
 
 
+@bot.command()
+async def send_poll(ctx):
+    # Create two buttons
+    button1 = discord.ui.Button(label="Button 1", style=discord.ButtonStyle.green)
+    button2 = discord.ui.Button(label="Button 2", style=discord.ButtonStyle.red)
+
+    # Add the buttons to a view
+    view = discord.ui.View(button1, button2)
+
+    # Send a message with the buttons
+    await ctx.channel.send("Here are some buttons!", view=view)
+
+    # Define event listeners for the buttons
+    async def button1_callback(interaction: discord.Interaction):
+        await interaction.response.send_message("You clicked button 1!")
+
+    async def button2_callback(interaction: discord.Interaction):
+        await interaction.response.send_message("You clicked button 2!")
+
+    # Add the event listeners to the buttons
+    button1.callback = button1_callback
+    button2.callback = button2_callback
+
+
 meme_making = bot.create_group("meme_making", "Commands related to making memes")
 
 

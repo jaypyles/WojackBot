@@ -6,3 +6,4 @@ General purpose server bot for my personal servers.
 
 - [ ] Add more settings for the meme making commands
 - [ ] Embeds, custom menus, etc.
+- [x] Containerize bot

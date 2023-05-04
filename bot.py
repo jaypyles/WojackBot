@@ -7,6 +7,7 @@ import ifunnygifmaker
 from dotenv import load_dotenv
 
 # LOCAL
+from gpt import GPT
 from reddit import RedditSearcher
 
 # LOAD ENV
@@ -26,6 +27,7 @@ intents.messages = True
 intents.message_content = True
 intents.typing = True
 bot = discord.Bot(command_prefix="**", intents=intents)
+bot.add_cog(GPT(bot))
 
 
 @bot.event

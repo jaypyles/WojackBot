@@ -12,8 +12,9 @@ dependencies = [
     "py-cord>=2.4.1",
     "ifunnygifmaker==0.2.2",
     "praw>=7.7.0",
+    "gpt4free>=1.0.2",
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.9, !=3.9.7"
 readme = "README.md"
 license = {text = "MIT"}
 

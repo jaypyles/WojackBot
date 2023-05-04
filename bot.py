@@ -7,6 +7,7 @@ import ifunnygifmaker
 from dotenv import load_dotenv
 
 # LOCAL
+from gpt import GPT
 from reddit import RedditSearcher
 
 # LOAD ENV
@@ -66,4 +67,5 @@ async def meme(
     await ctx.send(file=file)
 
 
+bot.add_cog(GPT(bot))
 bot.run(token)

@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 # LOCAL
 from gpt import GPT
+from logger import LOG
 from reddit import RedditSearcher
 
 # LOAD ENV
@@ -46,6 +47,7 @@ async def random(ctx):
     caption = caption_subreddit.random().title
     search = meme_generation.random().title
 
+    LOG.info("Making meme with [caption: %s], [query: %s]", caption, search)
     m.make_meme(text=caption, query=search.replace(" ", "+"))
     with open("out.gif", "rb") as f:
         file = discord.File(f)
@@ -56,8 +58,8 @@ async def random(ctx):
 @meme_making.command()
 async def meme(
     ctx,
-    caption: discord.Option(str, description="Caption for your meme."),
-    url: discord.Option(str, description="The url of the Tenor media gif."),
+    caption: discord.Option(str, description="Caption for your meme."),  # type: ignore
+    url: discord.Option(str, description="The url of the Tenor media gif."),  # type: ignore
 ):
     await ctx.respond("Making a meme..")
 

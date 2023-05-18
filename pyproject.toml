@@ -12,7 +12,10 @@ dependencies = [
     "py-cord>=2.4.1",
     "ifunnygifmaker==0.2.2",
     "praw>=7.7.0",
+    "cffi>=1.15.1",
     "gpt4free>=1.0.2",
+    "pytest>=7.3.1",
+    "hypothesis>=6.75.3",
 ]
 requires-python = ">=3.9, !=3.9.7"
 readme = "README.md"

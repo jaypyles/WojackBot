@@ -9,7 +9,6 @@ LOG = logging.getLogger(__name__)
 
 
 def test_gpt():
-    # usage You
     response = gpt4free.Completion.create(
         Provider.You, prompt="Write a poem on Lionel Messi"
     )

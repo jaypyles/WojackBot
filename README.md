@@ -10,7 +10,3 @@ General purpose server bot for my personal servers.
 - [x] Containerize bot
 - [x] Add a makefile for the docker image
 - [ ] Implement more tests
-
-## Disclaimer:
-
-This repository is for demonstration purposes only. The code in this repository may not be used or reproduced. I do not authorize the use of my code for commercial or other purposes.

@@ -18,6 +18,8 @@ intents.messages = True
 intents.message_content = True
 intents.typing = True
 bot = discord.Bot(command_prefix="**", intents=intents)
+
+#Cogs
 bot.add_cog(GPT(bot))
 bot.add_cog(MemeMaking(bot))
 

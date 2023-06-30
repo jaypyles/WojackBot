@@ -85,3 +85,23 @@ class ServerCommands(commands.Cog):
             await ctx.respond(f"Role: {role}, deleted...", ephemeral=True)
         else:
             await ctx.respond(f"Role: {role_name}, not found", ephemeral=True)
+
+    @server_commmands.command(name="give_role_permissions", description="Give permissions to a role.")
+    @commands.has_permissions(manage_permissions=True, manage_roles=True)
+    async def give_role_permissions(self, ctx, role_name: discord.Option(str, description="role to give permissions to"), perms: discord.Option(str, description="permission list")): #type: ignore
+        set_permissions = []
+        role = discord.utils.get(ctx.guild.roles, name=role_name)
+
+        permission_list = perms.split(" ")
+
+        permissions = discord.Permissions()
+
+        for permission in permission_list:
+            try:
+                setattr(permissions, permission, True)
+                set_permissions.append(permission)
+            except:
+                await ctx.respond(f"{permission} does not exist.")
+
+        await role.edit(permissions=permissions)
+        await ctx.respond(f"{set_permissions} set to True.", ephemeral=True)

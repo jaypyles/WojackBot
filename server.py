@@ -59,7 +59,7 @@ class ServerCommands(commands.Cog):
         await ctx.respond("Select a game:",view=SelectView(bot=self.bot), ephemeral=True)
 
     @server_commmands.command(name="purge_messages", description="Purge messages up to a set limit.")
-    @commands.has_guild_permissions(administrator=True)
+    @commands.has_guild_permissions(manage_messages=True)
     async def purge_messages(self, ctx, message_amount: discord.Option(int, description="amount of messages")): #type: ignore
         await ctx.respond(f"Purging {message_amount} message(s)...", ephemeral=True)
         await ctx.channel.purge(limit=message_amount+1)

@@ -68,3 +68,20 @@ class ServerCommands(commands.Cog):
     async def purge_messages_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.respond("You do not have the required permissions to use this command.", ephemeral=True)
+
+    @server_commmands.command(name="make_role", description="Create a role.")
+    @commands.has_permissions(manage_permissions=True, manage_roles=True)
+    async def create_role(self, ctx, role_name: discord.Option(str, description="role to create")): #type: ignore
+        guild = ctx.guild
+        role = await guild.create_role(name=role_name)
+        await ctx.respond(f"Role: {role}, created...", ephemeral=True)
+
+    @server_commmands.command(name="delete_role", description="Create a role.")
+    @commands.has_permissions(manage_permissions=True, manage_roles=True)
+    async def delete_role(self, ctx, role_name: discord.Option(str, description="role to delete")): #type: ignore
+        role = discord.utils.get(ctx.guild.roles, name=role_name) #type: ignore
+        if role:
+            await role.delete()
+            await ctx.respond(f"Role: {role}, deleted...", ephemeral=True)
+        else:
+            await ctx.respond(f"Role: {role_name}, not found", ephemeral=True)

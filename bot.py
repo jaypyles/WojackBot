@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 # LOCAL
 from gpt import GPT
 from meme import MemeMaking
+from server import ServerCommands
 
 # LOAD ENV
 load_dotenv()
@@ -21,6 +22,7 @@ bot = discord.Bot(command_prefix="**", intents=intents)
 
 #Cogs
 bot.add_cog(GPT(bot))
+bot.add_cog(ServerCommands(bot))
 bot.add_cog(MemeMaking(bot))
 
 
@@ -28,6 +30,5 @@ bot.add_cog(MemeMaking(bot))
 async def on_ready():
     await bot.change_presence(activity=discord.Game("doom scrolling"))
     print(f"Logged in as {bot.user}")
-
 
 bot.run(token)

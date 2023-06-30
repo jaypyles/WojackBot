@@ -1,7 +1,3 @@
-
-# STL
-from enum import Enum
-
 # PDM
 import discord
 from discord.ext import commands
@@ -43,9 +39,7 @@ class Select(discord.ui.Select):
         )
 
         embed.set_image(url=GameImages[Games[self.game]])
-
         await channel.send(content="@here", embed=embed)
-
 
 class SelectView(discord.ui.View):
     def __init__(self, *, timeout = 180, bot):
@@ -60,6 +54,17 @@ class ServerCommands(commands.Cog):
 
     server_commmands = discord.SlashCommandGroup("server_commmands")
 
-    @server_commmands.command(name="game_annoucement")
+    @server_commmands.command(name="gamer_search", description="Send annoucment that you are looking for gamers.")
     async def game_annoucement(self, ctx):
         await ctx.respond("Select a game:",view=SelectView(bot=self.bot), ephemeral=True)
+
+    @server_commmands.command(name="purge_messages", description="Purge messages up to a set limit.")
+    @commands.has_guild_permissions(administrator=True)
+    async def purge_messages(self, ctx, message_amount: discord.Option(int, description="amount of messages")): #type: ignore
+        await ctx.respond(f"Purging {message_amount} message(s)...", ephemeral=True)
+        await ctx.channel.purge(limit=message_amount+1)
+
+    @purge_messages.error
+    async def purge_messages_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.respond("You do not have the required permissions to use this command.", ephemeral=True)

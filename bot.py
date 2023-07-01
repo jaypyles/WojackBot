@@ -18,6 +18,7 @@ intents = discord.Intents.default()
 intents.messages = True
 intents.message_content = True
 intents.typing = True
+intents.members = True
 bot = discord.Bot(command_prefix="**", intents=intents)
 
 #Cogs

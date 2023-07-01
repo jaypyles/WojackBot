@@ -43,7 +43,7 @@ class MemeMaking(commands.Cog):
         embed.set_image(url="attachment://out.gif")
         await ctx.send(file=file, embed=embed)
 
-    @meme_making.command(help="Make a meme")
+    @meme_making.command(name="construct_meme", help="Construct a meme.")
     async def meme(
         self,
         ctx,

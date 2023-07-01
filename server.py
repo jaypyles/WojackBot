@@ -118,7 +118,7 @@ class ServerCommands(commands.Cog):
         role = await guild.create_role(name=role_name)
         await ctx.respond(f"Role: {role}, created...", ephemeral=True)
 
-    @server_commmands.command(name="delete_role", description="Create a role.")
+    @server_commmands.command(name="delete_role", description="Delete a role.")
     @commands.has_permissions(manage_permissions=True, manage_roles=True)
     async def delete_role(self, ctx, role_name: discord.Option(str, description="role to delete")):  # type: ignore
         role = discord.utils.get(ctx.guild.roles, name=role_name)  # type: ignore

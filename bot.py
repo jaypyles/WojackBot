@@ -21,7 +21,7 @@ intents.typing = True
 intents.members = True
 bot = discord.Bot(command_prefix="**", intents=intents)
 
-#Cogs
+# Cogs
 bot.add_cog(GPT(bot))
 bot.add_cog(ServerCommands(bot))
 bot.add_cog(MemeMaking(bot))
@@ -31,5 +31,6 @@ bot.add_cog(MemeMaking(bot))
 async def on_ready():
     await bot.change_presence(activity=discord.Game("doom scrolling"))
     print(f"Logged in as {bot.user}")
+
 
 bot.run(token)

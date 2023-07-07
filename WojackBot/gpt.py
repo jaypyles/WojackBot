@@ -5,7 +5,7 @@ from gpt4free import Provider
 from discord.ext import commands
 
 # LOCAL
-from logger import LOG
+from .logger import LOG
 
 
 class GPT(commands.Cog):

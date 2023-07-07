@@ -21,6 +21,9 @@ requires-python = ">=3.9, !=3.9.7"
 readme = "README.md"
 license = {text = "MIT"}
 
+[project.scripts]
+bot = "WojackBot:bot"
+
 [tool.pytest.ini_options]
 log_cli = true
 log_cli_level = "INFO"

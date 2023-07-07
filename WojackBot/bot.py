@@ -6,9 +6,9 @@ import discord
 from dotenv import load_dotenv
 
 # LOCAL
-from gpt import GPT
-from meme import MemeMaking
-from server import ServerCommands
+from .gpt import GPT
+from .meme import MemeMaking
+from .server import ServerCommands
 
 # LOAD ENV
 load_dotenv()

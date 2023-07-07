@@ -8,7 +8,7 @@ from gpt4free import Provider
 from discord.ext.commands.errors import RoleNotFound, UserNotFound
 
 # LOCAL
-from logger import LOG
+from .logger import LOG
 
 
 async def find_user_by_query(

@@ -8,17 +8,13 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 # LOCAL
-from utils import create_meme_gif, create_meme_caption
-from logger import LOG
-from reddit import RedditSearcher
+from .utils import create_meme_gif, create_meme_caption
+from .logger import LOG
 
 # FUNCTIONAL
 load_dotenv()
 tenor_token = os.getenv("TENOR_API_KEY")
 m = ifunnygifmaker.MemeMaker(token=tenor_token)
-reddit = RedditSearcher()
-caption_subreddit = reddit.subreddit("copypasta")
-meme_generation = reddit.subreddit("gif")
 
 
 class MemeMaking(commands.Cog):

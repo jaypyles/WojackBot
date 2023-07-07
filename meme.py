@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 # LOCAL
+from utils import create_meme_gif, create_meme_caption
 from logger import LOG
 from reddit import RedditSearcher
 
@@ -31,8 +32,8 @@ class MemeMaking(commands.Cog):
     async def random(self, ctx):
         await ctx.respond("Making random meme..")
 
-        caption = caption_subreddit.random().title
-        search = meme_generation.random().title
+        caption = create_meme_caption()
+        search = create_meme_gif(caption)
 
         LOG.info("Making meme with [caption: %s], [query: %s]", caption, search)
         m.make_meme(text=caption, query=search.replace(" ", "+"))

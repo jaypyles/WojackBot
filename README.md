@@ -2,11 +2,11 @@
 
 General purpose server bot for my personal servers.
 
+## Meme Making
+
+## Server Commands
+
 ## To-Do
 
-- [x] Implement PyTest to verify GPT api
-- [ ] Add more settings for the meme making commands
-- [ ] Embeds, custom menus, etc.
-- [x] Containerize bot
-- [x] Add a makefile for the docker image
-- [ ] Implement more tests
+- [ ] Wrap all .py files into src
+- [ ] Fix smaller errors in code, ex: no description on some commands

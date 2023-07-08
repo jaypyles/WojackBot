@@ -1,4 +1,3 @@
-
 # Use Ubuntu 20.04 as the base image
 FROM ubuntu:20.04
 
@@ -13,6 +12,7 @@ WORKDIR /app
 
 # Copy the bot project files to the container
 COPY . .
+
 # Install bot dependencies
 RUN pdm sync
 
@@ -20,4 +20,4 @@ RUN pdm sync
 EXPOSE 3000
 
 # Start the bot
-CMD ["pdm", "run", "python", "bot.py"]
+CMD ["pdm", "run", "bot"]

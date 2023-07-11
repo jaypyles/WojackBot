@@ -86,7 +86,8 @@ class MemeMaking(commands.Cog):
 
         caption = create_meme_caption()
         if caption == ERROR_MESSAGE:
-            ctx.respond("Meme could not be created, try again.", ephemeral=True)
+            await ctx.respond("Meme could not be created, try again.", ephemeral=True)
+            return
 
         search = create_meme_gif(caption)
 
@@ -128,7 +129,8 @@ class MemeMaking(commands.Cog):
         caption = create_meme_prompted_caption(prompt)
 
         if caption == ERROR_MESSAGE:
-            ctx.respond("Meme could not be created, try again.", ephemeral=True)
+            await ctx.respond("Meme could not be created, try again.", ephemeral=True)
+            return
 
         search = create_meme_gif(caption)
 

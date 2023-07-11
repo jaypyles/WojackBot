@@ -1,9 +1,9 @@
 # PDM
 import discord
 from discord.ext import commands
+from utils.discord_utils import find_role_by_query, find_user_by_query
 
 # LOCAL
-from .utils import find_role_by_query, find_user_by_query
 from .logger import LOG
 
 Games = {"op1": "BattleBit", "op2": "Overwatch", "op3": "Rocket League"}

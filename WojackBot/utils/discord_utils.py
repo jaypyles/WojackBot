@@ -3,12 +3,10 @@ from typing import Optional
 
 # PDM
 import discord
-import gpt4free
-from gpt4free import Provider
 from discord.ext.commands.errors import RoleNotFound, UserNotFound
 
 # LOCAL
-from .logger import LOG
+from WojackBot.logger import LOG
 
 
 async def find_user_by_query(
@@ -38,17 +36,3 @@ async def find_role_by_query(ctx, role_name: str) -> discord.Role:
         return role
     else:
         raise RoleNotFound(role_name)
-
-
-def create_meme_caption():
-    """Resolve a meme caption from the GPT4FREE api"""
-    prompt = "Reply with a 5 word caption for a meme, do not include quotations or any sort of punctuation like periods, commas, etc."
-    response = gpt4free.Completion.create(Provider.You, prompt=prompt)
-    return response
-
-
-def create_meme_gif(caption):
-    """Resolve a gif caption from the GPT4FREE api"""
-    prompt = f"Reply with a 5 word idea for a gif that would go with this meme: {caption}, do not include quotations or any sort of punctuation."
-    response = gpt4free.Completion.create(Provider.You, prompt=prompt)
-    return response

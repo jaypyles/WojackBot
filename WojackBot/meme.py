@@ -25,9 +25,6 @@ tenor_token = os.getenv("TENOR_API_KEY")
 m = ifunnygifmaker.MemeMaker(token=tenor_token)
 
 
-MAX_RETRIES = 5
-
-
 def create_meme_caption():
     """Resolve a meme caption from the GPT4FREE API"""
     prompt = "Reply with a 5 word caption for a random meme, something that is relatable, do not include quotations or any sort of punctuation like periods, commas, etc."

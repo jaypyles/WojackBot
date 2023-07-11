@@ -1,7 +1,7 @@
 # PDM
 import discord
 from discord.ext import commands
-from Utils.discord_utils import find_role_by_query, find_user_by_query
+from utils.discord_utils import find_role_by_query, find_user_by_query
 
 # LOCAL
 from .logger import LOG

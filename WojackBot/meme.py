@@ -42,7 +42,7 @@ class MemeMaking(commands.Cog):
 
     meme_making = discord.SlashCommandGroup("meme_making")
 
-    @meme_making.command(name="random", help="Generate a random meme")
+    @meme_making.command(name="random", description="Generate a random meme")
     async def random(self, ctx):
         await ctx.respond("Making random meme..")
 
@@ -58,7 +58,7 @@ class MemeMaking(commands.Cog):
         embed.set_image(url="attachment://out.gif")
         await ctx.send(file=file, embed=embed)
 
-    @meme_making.command(name="construct_meme", help="Construct a meme.")
+    @meme_making.command(name="construct_meme", description="Construct a meme.")
     async def meme(
         self,
         ctx,

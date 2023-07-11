@@ -1,7 +1,9 @@
 # PDM
 import discord
 from discord.ext import commands
-from utils.discord_utils import find_role_by_query, find_user_by_query
+
+# LOCAL
+from WojackBot.utils.discord_utils import find_role_by_query, find_user_by_query
 
 # LOCAL
 from .logger import LOG

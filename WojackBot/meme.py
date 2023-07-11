@@ -10,6 +10,9 @@ from gpt4free import Provider
 from discord.ext import commands
 
 # LOCAL
+from WojackBot.utils.transformers import caption_strip
+
+# LOCAL
 from .logger import LOG
 
 # FUNCTIONAL
@@ -22,7 +25,7 @@ def create_meme_caption():
     """Resolve a meme caption from the GPT4FREE api"""
     prompt = "Reply with a 5 word caption for a meme, do not include quotations or any sort of punctuation like periods, commas, etc."
     response = gpt4free.Completion.create(Provider.You, prompt=prompt)
-    return response
+    return caption_strip(response)
 
 
 def create_meme_gif(caption):

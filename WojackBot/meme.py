@@ -10,6 +10,7 @@ from gpt4free import Provider
 from discord.ext import commands
 
 # LOCAL
+from WojackBot.utils.meme_utils import gather_prompt_text
 from WojackBot.utils.transformers import caption_strip
 
 # LOCAL
@@ -24,6 +25,13 @@ m = ifunnygifmaker.MemeMaker(token=tenor_token)
 def create_meme_caption():
     """Resolve a meme caption from the GPT4FREE api"""
     prompt = "Reply with a 5 word caption for a random meme, something that is relatable, do not include quotations or any sort of punctuation like periods, commas, etc."
+    response = gpt4free.Completion.create(Provider.You, prompt=prompt)
+    return caption_strip(response)
+
+
+def create_meme_prompted_caption(prompt):
+    """Resolve a meme caption from the GPT4FREE api"""
+    prompt = gather_prompt_text("prompts/memeprompt.txt") + prompt
     response = gpt4free.Completion.create(Provider.You, prompt=prompt)
     return caption_strip(response)
 
@@ -68,6 +76,26 @@ class MemeMaking(commands.Cog):
         await ctx.respond("Making a meme..")
 
         m.make_meme(text=caption, url=url)
+        with open("out.gif", "rb") as f:
+            file = discord.File(f)
+
+        embed = discord.Embed(title="woah funny!")
+        embed.set_image(url="attachment://out.gif")
+        await ctx.send(file=file, embed=embed)
+
+    @meme_making.command(
+        name="prompt_meme", description="Construct a meme from a prompt."
+    )
+    async def prompted_meme(
+        self,
+        ctx,
+        caption: discord.Option(str, description="Prompt for your meme."),  # type: ignore
+    ):
+        await ctx.respond("Making a meme..")
+        caption = create_meme_prompted_caption(caption)
+        search = create_meme_gif(caption)
+
+        m.make_meme(text=caption, query=search.replace(" ", "+"))
         with open("out.gif", "rb") as f:
             file = discord.File(f)
 

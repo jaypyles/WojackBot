@@ -12,7 +12,7 @@ from .server import ServerCommands
 
 # LOAD ENV
 load_dotenv()
-token = os.getenv("TOKEN")
+token = os.getenv("DEV_TOKEN")
 
 intents = discord.Intents.default()
 intents.messages = True

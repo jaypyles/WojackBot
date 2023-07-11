@@ -8,6 +8,7 @@ from gpt4free import Provider
 
 LOG = logging.getLogger(__name__)
 
+
 @pytest.mark.gpt
 def test_gpt():
     response = gpt4free.Completion.create(

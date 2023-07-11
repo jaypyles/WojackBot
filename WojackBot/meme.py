@@ -1,5 +1,6 @@
 # STL
 import os
+import time
 
 # PDM
 import discord
@@ -10,6 +11,8 @@ from gpt4free import Provider
 from discord.ext import commands
 
 # LOCAL
+from WojackBot.utils.checks import validate_caption
+from WojackBot.utils.constants import MAX_RETRIES, ERROR_MESSAGE
 from WojackBot.utils.meme_utils import gather_prompt_text
 from WojackBot.utils.transformers import caption_strip
 
@@ -22,18 +25,45 @@ tenor_token = os.getenv("TENOR_API_KEY")
 m = ifunnygifmaker.MemeMaker(token=tenor_token)
 
 
+MAX_RETRIES = 5
+
+
 def create_meme_caption():
-    """Resolve a meme caption from the GPT4FREE api"""
+    """Resolve a meme caption from the GPT4FREE API"""
     prompt = "Reply with a 5 word caption for a random meme, something that is relatable, do not include quotations or any sort of punctuation like periods, commas, etc."
-    response = gpt4free.Completion.create(Provider.You, prompt=prompt)
-    return caption_strip(response)
+    retries = 0
+    while retries < MAX_RETRIES:
+        response = gpt4free.Completion.create(Provider.You, prompt=prompt)
+        caption = caption_strip(response)
+        if validate_caption(caption):
+            return caption
+        else:
+            LOG.warning(
+                f"Invalid caption: {caption}. Retrying... ({retries+1}/{MAX_RETRIES})"
+            )
+            retries += 1
+            time.sleep(1)
+
+    return ERROR_MESSAGE
 
 
 def create_meme_prompted_caption(prompt):
     """Resolve a meme caption from the GPT4FREE api"""
     prompt = gather_prompt_text("prompts/memeprompt.txt") + prompt
-    response = gpt4free.Completion.create(Provider.You, prompt=prompt)
-    return caption_strip(response)
+    retries = 0
+    while retries < MAX_RETRIES:
+        response = gpt4free.Completion.create(Provider.You, prompt=prompt)
+        caption = caption_strip(response)
+        if validate_caption(caption):
+            return caption
+        else:
+            LOG.warning(
+                f"Invalid caption: {caption}. Retrying... ({retries+1}/{MAX_RETRIES})"
+            )
+            retries += 1
+            time.sleep(1)
+
+    return ERROR_MESSAGE
 
 
 def create_meme_gif(caption):
@@ -55,6 +85,9 @@ class MemeMaking(commands.Cog):
         await ctx.respond("Making random meme..")
 
         caption = create_meme_caption()
+        if caption == ERROR_MESSAGE:
+            ctx.respond("Meme could not be created, try again.", ephemeral=True)
+
         search = create_meme_gif(caption)
 
         LOG.info("Making meme with [caption: %s], [query: %s]", caption, search)
@@ -89,10 +122,14 @@ class MemeMaking(commands.Cog):
     async def prompted_meme(
         self,
         ctx,
-        caption: discord.Option(str, description="Prompt for your meme."),  # type: ignore
+        prompt: discord.Option(str, description="Prompt for your meme."),  # type: ignore
     ):
         await ctx.respond("Making a meme..")
-        caption = create_meme_prompted_caption(caption)
+        caption = create_meme_prompted_caption(prompt)
+
+        if caption == ERROR_MESSAGE:
+            ctx.respond("Meme could not be created, try again.", ephemeral=True)
+
         search = create_meme_gif(caption)
 
         m.make_meme(text=caption, query=search.replace(" ", "+"))

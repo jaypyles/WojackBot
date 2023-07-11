@@ -23,14 +23,14 @@ m = ifunnygifmaker.MemeMaker(token=tenor_token)
 
 def create_meme_caption():
     """Resolve a meme caption from the GPT4FREE api"""
-    prompt = "Reply with a 5 word caption for a meme, do not include quotations or any sort of punctuation like periods, commas, etc."
+    prompt = "Reply with a 5 word caption for a random meme, something that is relatable, do not include quotations or any sort of punctuation like periods, commas, etc."
     response = gpt4free.Completion.create(Provider.You, prompt=prompt)
     return caption_strip(response)
 
 
 def create_meme_gif(caption):
     """Resolve a gif caption from the GPT4FREE api"""
-    prompt = f"Reply with a 5 word idea for a gif that would go with this meme: {caption}, do not include quotations or any sort of punctuation."
+    prompt = f"Reply with a 2 word idea for a gif that would go with this meme: {caption}, do not include quotations or any sort of punctuation."
     response = gpt4free.Completion.create(Provider.You, prompt=prompt)
     return response
 

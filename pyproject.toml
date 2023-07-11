@@ -1,5 +1,3 @@
-[tool.pdm]
-
 [project]
 name = "WojackBot"
 version = "0.1.0"

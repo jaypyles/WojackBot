@@ -113,6 +113,36 @@ class ServerCommands(commands.Cog):
         else:
             await ctx.respond(f"Role: {role_name}, not found.", ephemeral=True)
 
+    @server_commmands.command(
+        name="remove_role", description="Remove a role from a member."
+    )
+    @commands.has_permissions(manage_permissions=True, manage_roles=True)
+    async def remove_role(
+        self,
+        ctx,
+        role_name: discord.Option(str, description="role to remove"),  # type: ignore
+        username: discord.Option(str, description="user to remove from"),  # type: ignore
+        user_id: discord.Option(  # type: ignore
+            str, description="user id to assign to", required=False
+        ),
+    ):
+        if user_id:
+            member = await find_user_by_query(ctx, username=username, user_id=[user_id])
+        else:
+            member = await find_user_by_query(ctx, username=username)
+        role = await find_role_by_query(ctx, role_name=role_name)
+
+        if role:
+            if member:
+                await member.remove_roles(role)
+                await ctx.respond(
+                    f"Member: {member} was given role: {role_name}", ephemeral=True
+                )
+            else:
+                await ctx.respond(f"Member: {member}, not found.", ephemeral=True)
+        else:
+            await ctx.respond(f"Role: {role_name}, not found.", ephemeral=True)
+
     @server_commmands.command(name="make_role", description="Create a role.")
     @commands.has_permissions(manage_permissions=True, manage_roles=True)
     async def create_role(self, ctx, role_name: discord.Option(str, description="role to create")):  # type: ignore

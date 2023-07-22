@@ -38,8 +38,16 @@ async def find_role_by_query(ctx, role_name: str) -> discord.Role:
         return role
     else:
         raise RoleNotFound(role_name)
+
+
 async def make_get_request(url):
     """Make an async get request"""
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             return await response.json()
+
+
+def select_random_hero(heroes):
+    """Select a random hero from a list of heroes"""
+    rand = random.randrange(0, len(heroes) - 1)
+    return heroes[rand].get("key")

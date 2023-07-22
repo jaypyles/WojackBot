@@ -1,7 +1,9 @@
 # STL
+import random
 from typing import Optional
 
 # PDM
+import aiohttp
 import discord
 from discord.ext.commands.errors import RoleNotFound, UserNotFound
 
@@ -36,3 +38,8 @@ async def find_role_by_query(ctx, role_name: str) -> discord.Role:
         return role
     else:
         raise RoleNotFound(role_name)
+async def make_get_request(url):
+    """Make an async get request"""
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            return await response.json()

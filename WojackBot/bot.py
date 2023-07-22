@@ -6,6 +6,7 @@ import discord
 from dotenv import load_dotenv
 
 # LOCAL
+from .fun import Fun
 from .gpt import GPT
 from .meme import MemeMaking
 from .server import ServerCommands
@@ -25,6 +26,7 @@ bot = discord.Bot(command_prefix="**", intents=intents)
 bot.add_cog(GPT(bot))
 bot.add_cog(ServerCommands(bot))
 bot.add_cog(MemeMaking(bot))
+bot.add_cog(Fun(bot))
 
 
 @bot.event

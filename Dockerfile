@@ -1,12 +1,9 @@
-# Use Ubuntu 20.04 as the base image
-FROM ubuntu:20.04
+# Use Python 3.9 as the base image
+FROM python:3.9
 
-# Update the package list and install required packages
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y python3.9 python3-pip && \
-    pip3 install pdm
+# Update pip and install required packages
+RUN pip install --upgrade pip && pip install pdm
 
-RUN apt-get update && apt-get install -y libjpeg-dev
 # Set the working directory to /app
 WORKDIR /app
 

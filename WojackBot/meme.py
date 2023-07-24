@@ -79,7 +79,7 @@ class MemeMaking(commands.Cog):
 
     @meme_making.command(name="random", description="Generate a random meme")
     async def random(self, ctx):
-        await ctx.respond("Making random meme..")
+        await ctx.respond("Making a meme..", ephemeral=True)
 
         caption = create_meme_caption()
         if caption == ERROR_MESSAGE:
@@ -93,7 +93,7 @@ class MemeMaking(commands.Cog):
         with open("out.gif", "rb") as f:
             file = discord.File(f)
 
-        embed = discord.Embed(title="woah funny!")
+        embed = discord.Embed(title="prompt: random")
         embed.set_image(url="attachment://out.gif")
         await ctx.send(file=file, embed=embed)
 
@@ -104,13 +104,13 @@ class MemeMaking(commands.Cog):
         caption: discord.Option(str, description="Caption for your meme."),  # type: ignore
         url: discord.Option(str, description="The url of the Tenor media gif."),  # type: ignore
     ):
-        await ctx.respond("Making a meme..")
+        await ctx.respond("Making a meme..", ephemeral=True)
 
         m.make_meme(text=caption, url=url)
         with open("out.gif", "rb") as f:
             file = discord.File(f)
 
-        embed = discord.Embed(title="woah funny!")
+        embed = discord.Embed(title=f"prompt: {caption}")
         embed.set_image(url="attachment://out.gif")
         await ctx.send(file=file, embed=embed)
 
@@ -122,7 +122,7 @@ class MemeMaking(commands.Cog):
         ctx,
         prompt: discord.Option(str, description="Prompt for your meme."),  # type: ignore
     ):
-        await ctx.respond("Making a meme..")
+        await ctx.respond("Making a meme..", ephemeral=True)
         caption = create_meme_prompted_caption(prompt)
 
         if caption == ERROR_MESSAGE:
@@ -135,6 +135,6 @@ class MemeMaking(commands.Cog):
         with open("out.gif", "rb") as f:
             file = discord.File(f)
 
-        embed = discord.Embed(title="woah funny!")
+        embed = discord.Embed(title=f"prompt: {prompt}")
         embed.set_image(url="attachment://out.gif")
         await ctx.send(file=file, embed=embed)

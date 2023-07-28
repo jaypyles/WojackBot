@@ -8,7 +8,7 @@ authors = [
 dependencies = [
     "python-dotenv>=1.0.0",
     "py-cord>=2.4.1",
-    "ifunnygifmaker==0.2.2",
+    "ifunnygifmaker==1.0.3",
     "praw>=7.7.0",
     "cffi>=1.15.1",
     "gpt4free>=1.0.2",

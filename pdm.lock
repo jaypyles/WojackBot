@@ -219,11 +219,11 @@ summary = "Internationalized Domain Names in Applications (IDNA)"
 
 [[package]]
 name = "ifunnygifmaker"
-version = "0.2.2"
+version = "1.0.3"
 requires_python = ">=3.9"
 summary = ""
 dependencies = [
-    "pillow>=9.5.0",
+    "pillow==9.5.0",
     "python-dotenv>=1.0.0",
     "requests>=2.28.2",
 ]
@@ -775,7 +775,7 @@ summary = "Backport of pathlib-compatible object wrapper for zip files"
 lock_version = "4.2"
 cross_platform = true
 groups = ["default"]
-content_hash = "sha256:d00920972c79560c1dfe91471f5459e04eac1be880c53f8f4009397b3b7e60a1"
+content_hash = "sha256:195f41be08ce60d993166cec82ea1af99ed46f9fe0b45752136946392f52e82c"
 
 [metadata.files]
 "aiohttp 3.8.4" = [
@@ -1178,9 +1178,9 @@ content_hash = "sha256:d00920972c79560c1dfe91471f5459e04eac1be880c53f8f4009397b3
     {url = "https://files.pythonhosted.org/packages/8b/e1/43beb3d38dba6cb420cefa297822eac205a277ab43e5ba5d5c46faf96438/idna-3.4.tar.gz", hash = "sha256:814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"},
     {url = "https://files.pythonhosted.org/packages/fc/34/3030de6f1370931b9dbb4dad48f6ab1015ab1d32447850b9fc94e60097be/idna-3.4-py3-none-any.whl", hash = "sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2"},
 ]
-"ifunnygifmaker 0.2.2" = [
-    {url = "https://files.pythonhosted.org/packages/39/fa/8fae5f454121d804c6f7180796b8214de16cd670f490e964876e3cd666d9/ifunnygifmaker-0.2.2-py3-none-any.whl", hash = "sha256:64d8d3e86c8550e69bef20cbcb5f76efa62bb8605ad2a7fed74c1e99abd72ee7"},
-    {url = "https://files.pythonhosted.org/packages/bd/eb/dc6f7c8e290f1f4faa3c31b8e0cf30a8c22b0fd119aaf6612b8c63f2ff0e/ifunnygifmaker-0.2.2.tar.gz", hash = "sha256:8502d152df7756dc472db2a11b2de26f7d6b624a6844f86593ab2f8884711d4f"},
+"ifunnygifmaker 1.0.3" = [
+    {url = "https://files.pythonhosted.org/packages/4c/b5/17c61be850c2eaf5ffd98382e6178a26a40a4e892952a4da41e5f78569eb/ifunnygifmaker-1.0.3-py3-none-any.whl", hash = "sha256:29ee5adf7d6a39d51982841ce4c8c956049bd0d772f2b414a567e9db3031d926"},
+    {url = "https://files.pythonhosted.org/packages/fa/10/7bac75fe69969c0ac831afb374628f02dd3fcab035ac967679c1802d4a0d/ifunnygifmaker-1.0.3.tar.gz", hash = "sha256:4ca8f9b0cc1c3593a891e6c914ccb501a77e83866f5e6752f9a992ec6c9f9df0"},
 ]
 "importlib-metadata 6.6.0" = [
     {url = "https://files.pythonhosted.org/packages/0b/1f/9de392c2b939384e08812ef93adf37684ec170b5b6e7ea302d9f163c2ea0/importlib_metadata-6.6.0.tar.gz", hash = "sha256:92501cdf9cc66ebd3e612f1b4f0c0765dfa42f0fa38ffb319b6bd84dd675d705"},

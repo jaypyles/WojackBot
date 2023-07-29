@@ -7,4 +7,11 @@ def validate_caption(caption_strip: str) -> bool:
     if caption_strip == ERROR_MESSAGE:
         return False
 
-    return len(caption_strip.split()) == 5
+    return 5 <= len(caption_strip.split()) < 8
+
+
+def validate_gif(gif_query: str) -> bool:
+    """Validates to make sure the gif is not an error message."""
+    if gif_query == ERROR_MESSAGE:
+        return False
+    return True

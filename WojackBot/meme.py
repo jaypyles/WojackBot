@@ -11,7 +11,7 @@ from gpt4free import Provider
 from discord.ext import commands
 
 # LOCAL
-from WojackBot.utils.checks import validate_caption
+from WojackBot.utils.checks import validate_gif, validate_caption
 from WojackBot.utils.constants import MAX_RETRIES, ERROR_MESSAGE
 from WojackBot.utils.meme_utils import gather_prompt_text
 from WojackBot.utils.transformers import caption_strip
@@ -39,7 +39,7 @@ def create_meme_caption():
                 f"Invalid caption: {caption}. Retrying... ({retries+1}/{MAX_RETRIES})"
             )
             retries += 1
-            time.sleep(1)
+            time.sleep(3)
 
     return ERROR_MESSAGE
 
@@ -58,16 +58,27 @@ def create_meme_prompted_caption(prompt):
                 f"Invalid caption: {caption}. Retrying... ({retries+1}/{MAX_RETRIES})"
             )
             retries += 1
-            time.sleep(1)
+            time.sleep(3)
 
     return ERROR_MESSAGE
 
 
 def create_meme_gif(caption):
     """Resolve a gif caption from the GPT4FREE api"""
-    prompt = f"Reply with a 2 word idea for a gif that would go with this meme: {caption}, do not include quotations or any sort of punctuation."
-    response = gpt4free.Completion.create(Provider.You, prompt=prompt)
-    return response
+    prompt = f"Reply with a 2-3 word idea for a gif that would go with this meme: {caption}, do not include quotations or any sort of punctuation."
+    retries = 0
+    while retries < MAX_RETRIES:
+        response = gpt4free.Completion.create(Provider.You, prompt=prompt)
+        if validate_gif(response):
+            return response
+        else:
+            LOG.warning(
+                f"Invalid gif query: {response}. Retrying... ({retries+1}/{MAX_RETRIES})"
+            )
+            retries += 1
+            time.sleep(3)
+
+    return ERROR_MESSAGE
 
 
 class MemeMaking(commands.Cog):
@@ -87,6 +98,9 @@ class MemeMaking(commands.Cog):
             return
 
         search = create_meme_gif(caption)
+        if search == ERROR_MESSAGE:
+            await ctx.respond("Meme could not be created, try again.", ephemeral=True)
+            return
 
         LOG.info("Making meme with [caption: %s], [query: %s]", caption, search)
         m.make_meme(text=caption, query=search.replace(" ", "+"))
@@ -130,6 +144,9 @@ class MemeMaking(commands.Cog):
             return
 
         search = create_meme_gif(caption)
+        if search == ERROR_MESSAGE:
+            await ctx.respond("Meme could not be created, try again.", ephemeral=True)
+            return
 
         m.make_meme(text=caption, query=search.replace(" ", "+"))
         with open("out.gif", "rb") as f:

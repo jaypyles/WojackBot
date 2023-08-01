@@ -35,4 +35,9 @@ async def on_ready():
     print(f"Logged in as {bot.user}")
 
 
+@bot.message_command(name="Make Meme")
+async def get_message_text(ctx, message: discord.Message):
+    await bot.get_cog("MemeMaking").make_message_meme(ctx, message.content)
+
+
 bot.run(token)

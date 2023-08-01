@@ -86,6 +86,28 @@ class MemeMaking(commands.Cog):
         super().__init__()
         self.bot = bot
 
+    @commands.Cog.listener()
+    async def make_message_meme(self, ctx, message_content: str):
+        await ctx.respond("Making a meme..", ephemeral=True)
+        caption = create_meme_prompted_caption(prompt=message_content)
+        if caption == ERROR_MESSAGE:
+            await ctx.respond("Meme could not be created, try again.", ephemeral=True)
+            return
+
+        search = create_meme_gif(caption)
+        if search == ERROR_MESSAGE:
+            await ctx.respond("Meme could not be created, try again.", ephemeral=True)
+            return
+
+        LOG.info("Making meme with [caption: %s], [query: %s]", caption, search)
+        m.make_meme(text=caption, query=search.replace(" ", "+"))
+        with open("out.gif", "rb") as f:
+            file = discord.File(f)
+
+        embed = discord.Embed(title="prompt: random")
+        embed.set_image(url="attachment://out.gif")
+        await ctx.send(file=file, embed=embed)
+
     meme_making = discord.SlashCommandGroup("meme_making")
 
     @meme_making.command(name="random", description="Generate a random meme")
@@ -138,6 +160,7 @@ class MemeMaking(commands.Cog):
     ):
         await ctx.respond("Making a meme..", ephemeral=True)
         caption = create_meme_prompted_caption(prompt)
+        LOG.info(f"caption: {caption}")
 
         if caption == ERROR_MESSAGE:
             await ctx.respond("Meme could not be created, try again.", ephemeral=True)

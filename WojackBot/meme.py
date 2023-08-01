@@ -104,7 +104,10 @@ class MemeMaking(commands.Cog):
         with open("out.gif", "rb") as f:
             file = discord.File(f)
 
-        embed = discord.Embed(title="prompt: random")
+        embed = discord.Embed(
+            title="prompt: message content", description=f"Message: {message_content}"
+        )
+
         embed.set_image(url="attachment://out.gif")
         await ctx.send(file=file, embed=embed)
 

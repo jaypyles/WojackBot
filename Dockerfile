@@ -1,5 +1,5 @@
-# Use Python 3.9 as the base image
-FROM python:3.9
+# Use Python slim as the base image
+FROM python:slim
 
 # Update pip and install required packages
 RUN pip install --upgrade pip && pip install pdm

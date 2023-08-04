@@ -52,7 +52,7 @@ async def help(ctx):
     cogs = await get_cogs(bot)
     options = [discord.SelectOption(label=cog, value=cog) for cog in cogs]
 
-    select = SelectView(options=options, placeholder="Select a command group:")
+    select = SelectView(options=options, placeholder="Select a command group:", bot=bot)
 
     await ctx.respond(embed=help_embed)
     await ctx.send(view=select)

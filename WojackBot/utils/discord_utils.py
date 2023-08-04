@@ -13,29 +13,27 @@ from WojackBot.logger import LOG
 
 
 class Select(discord.ui.Select):
-    def __init__(self, options: list, placeholder: str):
+    def __init__(self, options: list, placeholder: str, bot: commands.Bot):
         options = options
+        self.bot = bot
         super().__init__(
             placeholder=placeholder, max_values=1, min_values=1, options=options
         )
+
+    async def callback(self, interaction: discord.Interaction):
+        # This method will be called when the select menu is interacted with
+        selected_value = self.values[0]  # Get the first (and only) selected value
+        cog = self.bot.get_cog(selected_value)
+        cog_commands = cog.get_commands()
+        await interaction.response.send_message(f"Cog commands: {cog_commands}")
 
 
 class SelectView(discord.ui.View):
     """A select menu that can be sent as a view"""
 
-    def __init__(self, options: list, placeholder: str, timeout=180):
+    def __init__(self, options: list, placeholder: str, bot: commands.Bot, timeout=180):
         super().__init__(timeout=180)
-        self.add_item(Select(options, placeholder))
-
-
-async def get_cog_commands(bot: commands.Bot, cog: discord.Cog):
-    """Get all commands that belong to a certain Cog for a Bot"""
-    cog_commands = []
-    for command in bot.commands:
-        if command.cog and command.cog.qualified_name == cog:
-            cog_commands.append(command)
-
-    return cog_commands
+        self.add_item(Select(options, placeholder, bot))
 
 
 async def get_cogs(bot: discord.Bot):

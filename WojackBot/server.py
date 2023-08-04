@@ -1,6 +1,7 @@
 # PDM
 import discord
 from discord.ext import commands
+from discord.ext.pages import Page, Paginator, PaginatorMenu, PaginatorButton
 
 # LOCAL
 from WojackBot.utils.discord_utils import find_role_by_query, find_user_by_query

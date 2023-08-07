@@ -12,4 +12,5 @@ Section on commands
 
 ## To-Do
 
-- [ ] Reconfigure Docker image to either pull from Python or Alpine image
+- [ ] Create help menu for commands
+- [ ] Update params to autofill based on user, role, etc.

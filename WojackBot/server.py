@@ -1,6 +1,6 @@
 # PDM
 import discord
-from discord import option
+from discord import option, permissions
 from discord.ext import commands
 from discord.ext.pages import Page, Paginator, PaginatorMenu, PaginatorButton
 
@@ -92,105 +92,81 @@ class ServerCommands(commands.Cog):
     async def assign_role(
         self,
         ctx,
-        role_name: discord.Role,  # type: ignore
-        user: discord.Member,  # type: ignore
+        role: discord.Role,
+        member: discord.Member,
     ):
-        await user.add_roles(role_name)
-        await ctx.respond(
-            f"{user.mention} was given role: {role_name}.", ephemeral=True
-        )
+        await member.add_roles(role)
+        await ctx.respond(f"{member.mention} was given role: {role}.", ephemeral=True)
 
     @server_commmands.command(
         name="remove_role", description="Remove a role from a member."
     )
     @commands.has_permissions(manage_permissions=True, manage_roles=True)
-    async def remove_role(
-        self,
-        ctx,
-        role_name: discord.Option(str, description="role to remove"),  # type: ignore
-        username: discord.Option(str, description="user to remove from"),  # type: ignore
-        user_id: discord.Option(  # type: ignore
-            str, description="user id to assign to", required=False
-        ),
-    ):
-        if user_id:
-            member = await find_user_by_query(ctx, username=username, user_id=[user_id])
-        else:
-            member = await find_user_by_query(ctx, username=username)
-        role = await find_role_by_query(ctx, role_name=role_name)
-
-        if role:
-            if member:
-                await member.remove_roles(role)
-                await ctx.respond(
-                    f"Member: {member} was given role: {role_name}", ephemeral=True
-                )
-            else:
-                await ctx.respond(f"Member: {member}, not found.", ephemeral=True)
-        else:
-            await ctx.respond(f"Role: {role_name}, not found.", ephemeral=True)
+    async def remove_role(self, ctx, role: discord.Role, member: discord.Member):
+        await member.remove_roles(role)
+        await ctx.respond(f"{role} was removed from {member.mention}", ephemeral=True)
 
     @server_commmands.command(name="make_role", description="Create a role.")
     @commands.has_permissions(manage_permissions=True, manage_roles=True)
-    async def create_role(self, ctx, role_name: discord.Option(str, description="role to create")):  # type: ignore
+    async def make_role(self, ctx, role_name: discord.Option(str, description="role to create")):  # type: ignore
         guild = ctx.guild
         role = await guild.create_role(name=role_name)
         await ctx.respond(f"Role: {role}, created...", ephemeral=True)
 
     @server_commmands.command(name="delete_role", description="Delete a role.")
     @commands.has_permissions(manage_permissions=True, manage_roles=True)
-    async def delete_role(self, ctx, role_name: discord.Option(str, description="role to delete")):  # type: ignore
-        role = discord.utils.get(ctx.guild.roles, name=role_name)  # type: ignore
+    async def delete_role(self, ctx, role: discord.Role):  # type: ignore
         if role:
             await role.delete()
             await ctx.respond(f"Role: {role}, deleted...", ephemeral=True)
         else:
-            await ctx.respond(f"Role: {role_name}, not found", ephemeral=True)
+            await ctx.respond(f"Role: {role}, not found", ephemeral=True)
+
+    @staticmethod
+    def permission_autocomplete(self: discord.AutocompleteContext):
+        permissions = discord.Permissions.all()
+        return [permission[0] for permission in permissions]
 
     @server_commmands.command(
         name="give_role_permissions", description="Give permissions to a role."
     )
     @commands.has_permissions(manage_permissions=True, manage_roles=True)
-    async def give_role_permissions(self, ctx, role_name: discord.Option(str, description="role to give permissions to"), perms: discord.Option(str, description="permission list")):  # type: ignore
-        set_permissions = []
-        role = discord.utils.get(ctx.guild.roles, name=role_name)
+    @option("permission", autocomplete=permission_autocomplete)
+    async def give_role_permissions(self, ctx, role: discord.Role, permission: str):
+        current = role.permissions
 
-        permission_list = perms.split(" ")
+        permission_attr = getattr(current, permission, None)
 
-        permissions = discord.Permissions()
+        if permission_attr is not None and isinstance(permission_attr, bool):
+            setattr(current, permission, True)
 
-        for permission in permission_list:
-            try:
-                setattr(permissions, permission, True)
-                set_permissions.append(permission)
-            except:
-                await ctx.respond(f"{permission} does not exist.")
+            await role.edit(permissions=current)
 
-        await role.edit(permissions=permissions)
-        await ctx.respond(
-            f"Role: {role_name}, {set_permissions} set to True.", ephemeral=True
-        )
+            await ctx.respond(
+                f"Updated permissions for role {role.name}: {permission} is now True",
+                ephemeral=True,
+            )
+        else:
+            await ctx.respond(f"Invalid permission: {permission}", ephemeral=True)
 
     @server_commmands.command(
         name="delete_role_permissions", description="Remove permissions from a role."
     )
     @commands.has_permissions(manage_permissions=True, manage_roles=True)
-    async def remove_role_permissions(self, ctx, role_name: discord.Option(str, description="role to remove permissions from"), perms: discord.Option(str, description="permission list")):  # type: ignore
-        remove_permissions = []
-        role = discord.utils.get(ctx.guild.roles, name=role_name)
+    @option("permission", autocomplete=permission_autocomplete)
+    async def delete_role_permission(self, ctx, role: discord.Role, permission: str):
+        current = role.permissions
 
-        permission_list = perms.split(" ")
+        permission_attr = getattr(current, permission, None)
 
-        permissions = discord.Permissions()
+        if permission_attr is not None and isinstance(permission_attr, bool):
+            setattr(current, permission, False)
 
-        for permission in permission_list:
-            try:
-                setattr(permissions, permission, False)
-                remove_permissions.append(permission)
-            except:
-                await ctx.respond(f"{permission} does not exist.", ephemeral=True)
+            await role.edit(permissions=current)
 
-        await role.edit(permissions=permissions)
-        await ctx.respond(
-            f"Role: {role_name}, {remove_permissions} set to False.", ephemeral=True
-        )
+            await ctx.respond(
+                f"Updated permissions for role {role.name}: {permission} is now False",
+                ephemeral=True,
+            )
+        else:
+            await ctx.respond(f"Invalid permission: {permission}", ephemeral=True)

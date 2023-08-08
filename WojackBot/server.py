@@ -1,5 +1,6 @@
 # PDM
 import discord
+from discord import option
 from discord.ext import commands
 from discord.ext.pages import Page, Paginator, PaginatorMenu, PaginatorButton
 
@@ -91,28 +92,13 @@ class ServerCommands(commands.Cog):
     async def assign_role(
         self,
         ctx,
-        role_name: discord.Option(str, description="role to assign"),  # type: ignore
-        username: discord.Option(str, description="user to assign to"),  # type: ignore
-        user_id: discord.Option(  # type: ignore
-            str, description="user id to assign to", required=False
-        ),
+        role_name: discord.Role,  # type: ignore
+        user: discord.Member,  # type: ignore
     ):
-        if user_id:
-            member = await find_user_by_query(ctx, username=username, user_id=[user_id])
-        else:
-            member = await find_user_by_query(ctx, username=username)
-        role = await find_role_by_query(ctx, role_name=role_name)
-
-        if role:
-            if member:
-                await member.add_roles(role)
-                await ctx.respond(
-                    f"Member: {member} was given role: {role_name}", ephemeral=True
-                )
-            else:
-                await ctx.respond(f"Member: {member}, not found.", ephemeral=True)
-        else:
-            await ctx.respond(f"Role: {role_name}, not found.", ephemeral=True)
+        await user.add_roles(role_name)
+        await ctx.respond(
+            f"{user.mention} was given role: {role_name}.", ephemeral=True
+        )
 
     @server_commmands.command(
         name="remove_role", description="Remove a role from a member."

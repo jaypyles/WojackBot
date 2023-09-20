@@ -15,6 +15,7 @@ from WojackBot.utils.checks import validate_gif, validate_caption
 from WojackBot.utils.constants import MAX_RETRIES, ERROR_MESSAGE
 from WojackBot.utils.meme_utils import gather_prompt_text
 from WojackBot.utils.transformers import caption_strip
+from WojackBot.utils.discord_utils import send_used_command
 
 # LOCAL
 from .logger import LOG
@@ -109,6 +110,7 @@ class MemeMaking(commands.Cog):
         )
 
         embed.set_image(url="attachment://out.gif")
+        await send_used_command(ctx)
         await ctx.send(file=file, embed=embed)
 
     meme_making = discord.SlashCommandGroup("meme_making")
@@ -134,6 +136,7 @@ class MemeMaking(commands.Cog):
 
         embed = discord.Embed(title="prompt: random")
         embed.set_image(url="attachment://out.gif")
+        await send_used_command(ctx)
         await ctx.send(file=file, embed=embed)
 
     @meme_making.command(name="construct_meme", description="Construct a meme.")
@@ -151,6 +154,7 @@ class MemeMaking(commands.Cog):
 
         embed = discord.Embed(title=f"prompt: {caption}")
         embed.set_image(url="attachment://out.gif")
+        await send_used_command(ctx)
         await ctx.send(file=file, embed=embed)
 
     @meme_making.command(
@@ -180,4 +184,5 @@ class MemeMaking(commands.Cog):
 
         embed = discord.Embed(title=f"prompt: {prompt}")
         embed.set_image(url="attachment://out.gif")
+        await send_used_command(ctx)
         await ctx.send(file=file, embed=embed)

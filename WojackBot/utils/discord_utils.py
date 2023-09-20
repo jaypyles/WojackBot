@@ -83,3 +83,8 @@ def select_random_hero(heroes):
     """Select a random hero from a list of heroes"""
     rand = random.randrange(0, len(heroes) - 1)
     return heroes[rand].get("key")
+
+
+async def send_used_command(ctx):
+    """Message the command that was used."""
+    await ctx.send(f"{ctx.user.mention} used: {ctx.command}")

@@ -11,11 +11,11 @@ dependencies = [
     "ifunnygifmaker==1.0.3",
     "praw>=7.7.0",
     "cffi>=1.15.1",
-    "gpt4free>=1.0.2",
     "pytest>=7.3.1",
     "hypothesis>=6.75.3",
+    "g4f[all]>=0.2.1.0",
 ]
-requires-python = ">=3.9, !=3.9.7"
+requires-python = ">=3.10, !=3.9.7"
 readme = "README.md"
 license = {text = "MIT"}
 

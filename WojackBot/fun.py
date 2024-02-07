@@ -14,8 +14,8 @@ discord.Member
 LOG = logging.getLogger()
 load_dotenv()
 
-CHANNEL = os.getenv("CHANNEL_ID")
-USER = os.getenv("USER_ID")
+CHANNEL = os.getenv("CHANNEL_ID", 0)
+USER = os.getenv("USER_ID", 0)
 
 
 class Fun(commands.Cog):

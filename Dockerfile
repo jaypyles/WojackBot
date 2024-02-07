@@ -1,5 +1,7 @@
 # Use Python slim as the base image
-FROM python:slim
+FROM python:3.10-slim
+
+RUN apt-get update && apt-get install -y gcc
 
 # Update pip and install required packages
 RUN pip install --upgrade pip && pip install pdm
@@ -11,7 +13,7 @@ WORKDIR /app
 COPY . .
 
 # Install bot dependencies
-RUN pdm sync
+RUN pdm install
 
 # Expose the bot port
 EXPOSE 3000

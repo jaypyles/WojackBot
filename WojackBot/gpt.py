@@ -21,11 +21,20 @@ class GPT(commands.Cog):
     async def normal_prompt(
         self, ctx, prompt: discord.Option(str, description="Ask ChatGPT something.")  # type: ignore
     ):
-        await ctx.respond(f"Prompt: {prompt}")
+        MAX_RETRIES = 5
+        await ctx.respond(f"Prompt: {prompt}", ephemeral=True)
         LOG.info("Prompt: %s", prompt)
         response = gpt4free.Completion.create(Provider.You, prompt=prompt)
 
-        await ctx.send(response)
+        retries = 0
+        if (
+            response == "Unable to fetch the response, Please try again."
+            and retries <= MAX_RETRIES
+        ):
+            response = gpt4free.Completion.create(Provider.You, prompt=prompt)
+            retries += 1
+        else:
+            await ctx.send(response)
 
     @gpt.command(
         name="halal_prompt",

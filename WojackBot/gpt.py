@@ -34,7 +34,7 @@ class GPT(commands.Cog):
             response = gpt4free.Completion.create(Provider.You, prompt=prompt)
             retries += 1
         else:
-            await ctx.send(response)
+            await ctx.send(prompt + "\n" + response)
 
     @gpt.command(
         name="halal_prompt",

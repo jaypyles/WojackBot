@@ -1,5 +1,12 @@
+# STL
+import asyncio
+
 # PDM
 import g4f
+import aiohttp
+
+# LOCAL
+from WojackBot.logger import LOG
 
 
 async def call_ai(prompt: str):
@@ -13,3 +20,28 @@ async def call_ai(prompt: str):
 
     except Exception as e:
         print(e)
+
+
+async def call_search(prompt: str) -> dict:
+    url = "http://searchbackend:8000/api/search/get_search_refs"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0",
+        "Accept": "*/*",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Content-Type": "application/json",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+    }
+    data = {
+        "query": prompt,
+        "model": "gpt3.5",
+        "ask_type": "search",
+        "llm_auth_token": "",
+        "llm_base_url": None,
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, headers=headers, json=data) as response:
+            response_text = await response.json()
+            return response_text

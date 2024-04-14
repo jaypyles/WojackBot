@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from discord.ext import commands
 
 # LOCAL
+from WojackBot.search import SearchCommands
 from WojackBot.utils.discord_utils import SelectView, get_cogs
 
 # LOCAL
@@ -31,6 +32,7 @@ bot.add_cog(GPT(bot))
 bot.add_cog(ServerCommands(bot))
 bot.add_cog(MemeMaking(bot))
 bot.add_cog(Fun(bot))
+bot.add_cog(SearchCommands(bot))
 
 
 @bot.event

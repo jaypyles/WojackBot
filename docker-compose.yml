@@ -1,0 +1,13 @@
+version: "3"
+services:
+  wojack:
+    container_name: wojackbot
+    build:
+      context: "./"
+    networks:
+      - search
+
+networks:
+  search:
+    external:
+      name: search

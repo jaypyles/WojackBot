@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 
 # LOCAL
-from WojackBot.utils.ai import call_search
+from WojackBot.utils.ai import call_search, call_research
 
 
 class SearchCommands(commands.Cog):
@@ -30,3 +30,9 @@ class SearchCommands(commands.Cog):
                 form_response.append(formatted_result)
 
             await ctx.respond("\n".join(form_response))
+
+    @search_xng.command(name="research", description="Search Anything.")
+    async def research(self, ctx, message_content: str):
+        await ctx.respond("Researching...", ephemeral=True)
+        response = call_research(message_content)
+        await ctx.respond(response)

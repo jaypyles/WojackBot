@@ -1,9 +1,11 @@
 # STL
+import json
 import asyncio
 
 # PDM
 import g4f
 import aiohttp
+import requests
 
 # LOCAL
 from WojackBot.logger import LOG
@@ -45,3 +47,34 @@ async def call_search(prompt: str) -> dict:
         async with session.post(url, headers=headers, json=data) as response:
             response_text = await response.json()
             return response_text
+
+
+def call_research(prompt: str):
+    body = {
+        "model": "gpt3.5",
+        "messages": [{"role": "user", "content": prompt}],
+    }
+
+    url = "http://searchbackend:8000/v1/chat/completions"
+    total_content = ""
+    response = requests.post(url, json=body)
+    response_text = response.text
+    data_chunks = response_text.split("\n")
+
+    total_content = ""
+    for chunk in data_chunks:
+        if chunk:
+            print(f"Chunk: {chunk}")
+            clean_json = chunk.replace("data: ", "")
+            try:
+                if clean_json:
+                    dict_data = json.loads(clean_json)
+                    token = dict_data["choices"][0]["delta"].get("content", "")
+                    if token:
+                        total_content += token
+            except json.JSONDecodeError as e:
+                print(f"Failed to decode JSON: {e} - Chunk: {clean_json}")
+
+    LOG.warning(f"LENGTH OF TOTAL CONTENT: {len(total_content)}")
+    LOG.warning(f"TOTAL CONTENT: {total_content}")
+    return total_content

@@ -75,6 +75,4 @@ def call_research(prompt: str):
             except json.JSONDecodeError as e:
                 print(f"Failed to decode JSON: {e} - Chunk: {clean_json}")
 
-    LOG.warning(f"LENGTH OF TOTAL CONTENT: {len(total_content)}")
-    LOG.warning(f"TOTAL CONTENT: {total_content}")
     return total_content
